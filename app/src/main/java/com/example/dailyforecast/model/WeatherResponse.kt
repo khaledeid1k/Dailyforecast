@@ -58,18 +58,6 @@ data class WeatherResponse<T, Y>(
         var  humidity: Int,
         var  temp_kf : Float
     )
-
-    companion object{
-        @BindingAdapter("SetWindSpeed")
-        @JvmStatic
-        fun setWindSpeed(view: View, speed: Double) {
-            val textview : TextView = view as TextView
-            val speed1=speed.times(1000)
-                .roundToInt()
-                .div(1000.0).toFloat()
-            textview.text= speed1.toString()
-        }
-    }
     data class WeatherCity(
         var  id: Long=0,
         var  name: String="",
@@ -86,5 +74,18 @@ data class WeatherResponse<T, Y>(
         var  lon : Double=0.0
 
     )
+    companion object{
+        @BindingAdapter("SetWindSpeed")
+        @JvmStatic
+        fun setWindSpeed(view: View, speed: Double) {
+            val textview : TextView = view as TextView
+            val speed1=speed.times(1000)
+                .roundToInt()
+                .div(1000.0).toFloat()
+            textview.text= speed1.toString()
+        }
+
+    }
+
 
 }

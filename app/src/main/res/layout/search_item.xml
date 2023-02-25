@@ -7,6 +7,9 @@
         <variable
             name="model"
             type="com.example.dailyforecast.model.WeatherResponse.WeatherList" />
+        <variable
+            name="position"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,24 +80,24 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/windGust_text"
+                    android:id="@+id/Weather_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="65dp"
-                    android:text="wind Gust : "
+                    android:text="Weather : "
                     android:textColor="#E6E4E4"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/windGust"
+                    android:id="@+id/Weather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="165dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="65dp"
-                    app:SetWindSpeed="@{model.wind.gust}"
+                    android:text="@{model.weather.get(0).description}"
                     android:textColor="#E6E4E4"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
