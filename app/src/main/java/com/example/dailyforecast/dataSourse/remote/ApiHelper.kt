@@ -6,10 +6,12 @@ import com.example.dailyforecast.model.WeatherResponse
 import retrofit2.Response
 
 interface ApiHelper {
-    suspend fun getResponse(apiKey: String,
-                            city:String):
-  Response<WeatherResponse<ArrayList<
-          WeatherList>, WeatherCity>>
+    suspend fun getResponse(
+        apiKey: String,
+        city: String
+    ):
+            Response<WeatherResponse<ArrayList<
+                    WeatherList>, WeatherCity>>
 
 
 }

@@ -1,6 +1,9 @@
 package com.example.dailyforecast.di
 
 import com.example.dailyforecast.BuildConfig
+import com.example.dailyforecast.dataSourse.remote.Api
+import com.example.dailyforecast.dataSourse.remote.ApiHelper
+import com.example.dailyforecast.dataSourse.remote.ApiHelperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,14 +17,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetWorkModule {
 
     @Singleton
     @Provides
     fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        OkHttpClient.Builder().addInterceptor(loggingInterceptor)
+        OkHttpClient.Builder().readTimeout(30,TimeUnit.SECONDS)
+            .connectTimeout(30,TimeUnit.SECONDS)
+            .addInterceptor(loggingInterceptor)
             .build()
 
     } else {
@@ -38,6 +43,15 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
 
 
 }

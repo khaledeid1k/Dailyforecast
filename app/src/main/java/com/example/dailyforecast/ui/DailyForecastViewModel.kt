@@ -17,7 +17,7 @@ class DailyForecastViewModel @Inject constructor
 
     private var _errorMessage = MutableLiveData<
             String>()
-    val errorMessage: MutableLiveData<String
+    val errorMessage: LiveData<String
     > get() = _errorMessage
 
     private var _cityForecast = MutableLiveData<

@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataBaseModel {
+object DataBaseModel {
     @Provides
     @Singleton
     fun provideDailyForecastDatabase(@ApplicationContext applicationContext: Context)
