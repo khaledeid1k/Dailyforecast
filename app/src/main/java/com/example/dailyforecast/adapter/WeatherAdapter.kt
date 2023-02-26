@@ -6,9 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dailyforecast.R
 import com.example.dailyforecast.databinding.SearchItemBinding
+import com.example.dailyforecast.model.WeatherList
 import com.example.dailyforecast.model.WeatherResponse
 
-class WeatherAdapter (var weatherList:ArrayList<WeatherResponse.WeatherList>)
+class WeatherAdapter (var weatherList:ArrayList<WeatherList>)
     : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: SearchItemBinding)

@@ -1,7 +1,10 @@
 package com.example.dailyforecast.ui
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.example.dailyforecast.model.WeatherResponse
+import com.example.dailyforecast.model.WeatherCity
+import com.example.dailyforecast.model.WeatherList
+import com.example.dailyforecast.model.WeatherResponseRoom
 import com.example.dailyforecast.repositories.Repository
 import com.example.dailyforecast.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +21,11 @@ class DailyForecastViewModel @Inject constructor
     > get() = _errorMessage
 
     private var _cityForecast = MutableLiveData<
-            Resource<ArrayList<WeatherResponse.WeatherList>, WeatherResponse.WeatherCity>>()
+            Resource<ArrayList<WeatherList>, WeatherCity>>()
     var cityForecast: LiveData<
-            Resource<ArrayList<WeatherResponse.WeatherList>, WeatherResponse.WeatherCity>
+            Resource<ArrayList<WeatherList>, WeatherCity>
             > = _cityForecast
+    var city = MediatorLiveData<WeatherResponseRoom>()
 
 
     // if i want to cansel Coroutine
@@ -43,6 +47,25 @@ class DailyForecastViewModel @Inject constructor
         }
     }
 
+    fun saveDailyForecast (weatherResponse: WeatherResponseRoom) {
+        viewModelScope.launch {
+            repository.saveForecast (weatherResponse)
+        }
+    }
+    fun getSavedDailyForecast(cityName:String) {
+        viewModelScope.launch {
+            city.addSource( repository.getSavedForecast(cityName)){
+                if(it!=null){
+                    city.value= WeatherResponseRoom(it.weatherList,it.weatherCity)
+
+                }else{
+                    city.value= WeatherResponseRoom(listOf(), WeatherCity())
+
+                }
+
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

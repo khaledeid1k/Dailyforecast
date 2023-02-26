@@ -34,6 +34,39 @@
             android:background="@drawable/search_background"
             />
 
+        <TextView
+            android:id="@+id/noAccurateData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Not Accurate Data"
+            android:textAlignment="center"
+            android:textColor="#9C0000"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search"
+            app:layout_constraintVertical_bias="0.0"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/showCachedData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show Cached Data"
+            android:textColor="#9C0000"
+            android:textAlignment="center"
+            android:layout_marginTop="160dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search"
+            app:layout_constraintBottom_toTopOf="@id/recyclerview"
+            android:visibility="gone"
+
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -42,13 +75,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/recyclerview"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="2dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:padding="4dp"
             tools:listitem="@layout/search_item"
             android:visibility="gone"
 
-          />
+
+            />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/noInternet"
             android:layout_width="match_parent"
@@ -62,6 +99,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:visibility="gone"
+
             >
 
             <ImageView

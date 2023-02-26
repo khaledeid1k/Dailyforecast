@@ -5,14 +5,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dailyforecast.adapter.WeatherAdapter
 import com.example.dailyforecast.databinding.ActivityMainBinding
-import com.example.dailyforecast.model.WeatherResponse
+import com.example.dailyforecast.model.WeatherList
+import com.example.dailyforecast.model.WeatherResponseRoom
 import com.example.dailyforecast.utils.makeGone
 import com.example.dailyforecast.utils.makeVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DailyForecastActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var weatherForecastAdapter: WeatherAdapter
-    private val weatherForecastViewModel: DailyForecastViewModel by viewModels()
+    private val weatherDailyForecastViewModel: DailyForecastViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -29,20 +28,24 @@ class DailyForecastActivity : AppCompatActivity() {
         setContentView(view)
         searchResult()
         retry()
+        getCachedData()
+
     }
 
-    fun getData(){
+    private fun getData() {
         val query = binding.search.text.toString()
-        weatherForecastViewModel.getCityForecast(query)
+        weatherDailyForecastViewModel.getCityForecast(query)
         observeResponse()
+        binding.noInternet.makeGone()
         binding.recyclerview.makeVisible()
 
     }
-    private fun retry(){
+
+    private fun retry() {
         binding.retry.setOnClickListener {
-            if(!checkForInternet(this)){
+            if (!checkForInternet(this)) {
                 Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 binding.noInternet.makeGone()
                 binding.retry.makeGone()
                 getData()
@@ -50,6 +53,7 @@ class DailyForecastActivity : AppCompatActivity() {
 
         }
     }
+
     private fun searchResult() {
 
         binding.search.setOnEditorActionListener { _, _, _ ->
@@ -58,14 +62,15 @@ class DailyForecastActivity : AppCompatActivity() {
                 binding.recyclerview.makeGone()
                 Toast.makeText(this, "Please ,Enter city name ", Toast.LENGTH_SHORT).show()
             } else {
-                if(checkForInternet(this)){
+                if (checkForInternet(this)) {
                     getData()
-                }else{
+                } else {
                     binding.recyclerview.makeGone()
                     binding.noInternet.makeVisible()
                     binding.retry.makeVisible()
-                }
+                    binding.showCachedData.makeVisible()
 
+                }
 
 
             }
@@ -78,25 +83,57 @@ class DailyForecastActivity : AppCompatActivity() {
 
     private fun observeResponse() {
 
-        weatherForecastViewModel.cityForecast.observe(this)
+        weatherDailyForecastViewModel.cityForecast.observe(this)
         {
-                    binding.recyclerview.makeVisible()
-                    addViews(it.WeatherState!!)
-
+            binding.recyclerview.makeVisible()
+            addViews(it.WeatherState!!)
+            val weatherResponse = WeatherResponseRoom(it.WeatherState, it.City!!)
+            weatherDailyForecastViewModel.saveDailyForecast(weatherResponse)
 
         }
     }
+    private fun getCachedData(){
+        binding.showCachedData.setOnClickListener{
+            Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show()
+            binding.noInternet.makeGone()
+            binding.recyclerview.makeVisible()
+            val searchedCity = binding.search.text.toString()
+            weatherDailyForecastViewModel.getSavedDailyForecast(searchedCity)
+            observeRoomResponse()
+        }
 
-    private fun addViews(weatherList: ArrayList<WeatherResponse.WeatherList>) {
+    }
+    private fun observeRoomResponse() {
+        weatherDailyForecastViewModel.city.observe(this) {
+            val list = (it.weatherList)
+            if (list.isNotEmpty()) {
+
+                binding.noAccurateData.makeVisible()
+                binding.noInternet.makeGone()
+                binding.recyclerview.makeVisible()
+                addViews(java.util.ArrayList(list))
+            } else {
+
+                binding.noAccurateData.makeGone()
+                binding.noInternet .makeVisible()
+                binding.recyclerview.makeGone()
+
+            }
+        }
+    }
+
+    private fun addViews(weatherList: ArrayList<WeatherList>) {
         weatherForecastAdapter = WeatherAdapter(weatherList)
         binding.recyclerview.adapter = weatherForecastAdapter
 
     }
+
     private fun checkForInternet(context: Context): Boolean {
 
         // register activity with the connectivity manager service
         val connectivityManager = context.getSystemService(
-            Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
 
         // if the android version is equal to M
         // or greater we need to use the
@@ -131,4 +168,5 @@ class DailyForecastActivity : AppCompatActivity() {
             return networkInfo.isConnected
         }
     }
+
 }

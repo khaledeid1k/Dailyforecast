@@ -1,5 +1,6 @@
 package com.example.dailyforecast.repositories
 
+import com.example.dailyforecast.dataSourse.local.DailyForeCastDao
 import com.example.dailyforecast.dataSourse.remote.Api
 import com.example.dailyforecast.dataSourse.remote.ApiHelper
 import com.example.dailyforecast.dataSourse.remote.ApiHelperImpl
@@ -22,5 +23,12 @@ class WeatherRepository {
 
     @Provides
     @Singleton
-    fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+        fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
+    @Provides
+    @Singleton
+    fun provideRepository(apiHelper: ApiHelper,forecastDao: DailyForeCastDao)
+            = Repository(apiHelper, forecastDao)
+
+
 }
