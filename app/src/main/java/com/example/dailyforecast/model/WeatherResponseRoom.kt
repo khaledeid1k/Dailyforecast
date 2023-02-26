@@ -3,7 +3,6 @@ package com.example.dailyforecast.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.shrouk.dailyforecast.model.Main
 
 @Entity(tableName = "DailyForecast_Table")
 class WeatherResponseRoom(

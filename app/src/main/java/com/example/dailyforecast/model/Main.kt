@@ -1,8 +1,4 @@
-package com.shrouk.dailyforecast.model
-
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
+package com.example.dailyforecast.model
 
 data class Main (
     var temp: Double,

@@ -1,9 +1,4 @@
 package com.example.dailyforecast.model
-import android.os.Parcelable
-
-import com.google.gson.annotations.SerializedName
-import com.shrouk.dailyforecast.model.Main
-import kotlinx.android.parcel.Parcelize
 
 
 data class WeatherList(

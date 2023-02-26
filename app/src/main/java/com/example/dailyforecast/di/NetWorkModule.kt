@@ -24,8 +24,8 @@ object NetWorkModule {
     fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        OkHttpClient.Builder().readTimeout(30,TimeUnit.SECONDS)
-            .connectTimeout(30,TimeUnit.SECONDS)
+        OkHttpClient.Builder().readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .build()
 

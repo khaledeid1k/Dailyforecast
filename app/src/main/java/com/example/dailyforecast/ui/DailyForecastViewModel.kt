@@ -1,6 +1,5 @@
 package com.example.dailyforecast.ui
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.dailyforecast.model.WeatherCity
 import com.example.dailyforecast.model.WeatherList

@@ -10,12 +10,13 @@ class Converter {
     fun fromWeatherListToJson(value: List<WeatherList>?) = Gson().toJson(value)!!
 
     @TypeConverter
-    fun  fromJsonToWeatherList(value: String) = Gson().fromJson(value, Array<WeatherList>::class.java).toList()
+    fun fromJsonToWeatherList(value: String) =
+        Gson().fromJson(value, Array<WeatherList>::class.java).toList()
 
     @TypeConverter
-    fun  fromWeatherCityToJson(value: WeatherCity?) = Gson().toJson(value)!!
+    fun fromWeatherCityToJson(value: WeatherCity?) = Gson().toJson(value)!!
 
     @TypeConverter
-    fun  fromGsonToWeatherCity(value: String) = Gson().fromJson(value, WeatherCity::class.java)!!
+    fun fromGsonToWeatherCity(value: String) = Gson().fromJson(value, WeatherCity::class.java)!!
 
 }

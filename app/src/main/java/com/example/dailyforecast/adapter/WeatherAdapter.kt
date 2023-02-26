@@ -7,25 +7,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dailyforecast.R
 import com.example.dailyforecast.databinding.SearchItemBinding
 import com.example.dailyforecast.model.WeatherList
-import com.example.dailyforecast.model.WeatherResponse
 
-class WeatherAdapter (var weatherList:ArrayList<WeatherList>)
-    : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
+class WeatherAdapter(var weatherList: ArrayList<WeatherList>) :
+    RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: SearchItemBinding)
-        :RecyclerView.ViewHolder(itemView.root){
-        var  searchItemBinding :SearchItemBinding=itemView
+    class ViewHolder(itemView: SearchItemBinding) : RecyclerView.ViewHolder(itemView.root) {
+        var searchItemBinding: SearchItemBinding = itemView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val groceriesItemBinding: SearchItemBinding= DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context), R.layout.search_item,parent,false
+        val groceriesItemBinding: SearchItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context), R.layout.search_item, parent, false
         )
-        return ViewHolder(groceriesItemBinding)    }
+        return ViewHolder(groceriesItemBinding)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val productList = weatherList[position]
-        holder.searchItemBinding.model=productList
+        holder.searchItemBinding.model = productList
     }
 
     override fun getItemCount(): Int {

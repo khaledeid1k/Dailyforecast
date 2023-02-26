@@ -1,15 +1,12 @@
 package com.example.dailyforecast.di
 
 import com.example.dailyforecast.dataSourse.local.DailyForeCastDao
-import com.example.dailyforecast.dataSourse.remote.Api
 import com.example.dailyforecast.dataSourse.remote.ApiHelper
-import com.example.dailyforecast.dataSourse.remote.ApiHelperImpl
 import com.example.dailyforecast.repositories.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -19,8 +16,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRepository(apiHelper: ApiHelper,forecastDao: DailyForeCastDao)
-            = Repository(apiHelper, forecastDao)
+    fun provideRepository(apiHelper: ApiHelper, forecastDao: DailyForeCastDao) =
+        Repository(apiHelper, forecastDao)
 
 
 }

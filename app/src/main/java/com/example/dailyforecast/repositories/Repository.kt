@@ -14,8 +14,8 @@ class Repository @Inject constructor(
 
     suspend fun getCityForecast(city: String) = api.getResponse(appid, city)
 
-     fun getSavedForecast(cityName: String) =
-         channelDao.getDailyForecastData(cityName)
+    fun getSavedForecast(cityName: String) =
+        channelDao.getDailyForecastData(cityName)
 
     suspend fun saveForecast(weatherResponse: WeatherResponseRoom) =
         channelDao.insertDailyForecastData(weatherResponse)

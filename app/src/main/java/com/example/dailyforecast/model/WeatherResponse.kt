@@ -1,12 +1,10 @@
 package com.example.dailyforecast.model
 
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.room.Entity
-import com.google.gson.annotations.SerializedName
 import kotlin.math.roundToInt
+
 data class WeatherResponse<T, Y>(
     val cod: String,
     val message: Int,
@@ -14,15 +12,15 @@ data class WeatherResponse<T, Y>(
     val list: T?,
     val city: Y?
 ) {
-    companion object{
+    companion object {
         @BindingAdapter("SetWindSpeed")
         @JvmStatic
         fun setWindSpeed(view: View, speed: Double) {
-            val textview : TextView = view as TextView
-            val speed1=speed.times(1000)
+            val textview: TextView = view as TextView
+            val speed1 = speed.times(1000)
                 .roundToInt()
                 .div(1000.0).toFloat()
-            textview.text= speed1.toString()
+            textview.text = speed1.toString()
         }
 
     }
